@@ -1,3 +1,4 @@
+require("dotenv").config();
 const rwClient = require("./bot");
 const CronJob = require("cron").CronJob;
 
@@ -45,8 +46,6 @@ const tweet = async (string) => {
   }
 };
 
-tweet("test1");
-
 let job = new CronJob(
   "0 0 6 * * *",
   tweetInspirationalQuote,
@@ -54,3 +53,36 @@ let job = new CronJob(
   true,
   "UTC+1"
 );
+
+const getRandomJoke = async () => {
+  let result;
+  const url = `https://api.humorapi.com/jokes/random?api-key=${process.env.HUMORAPI}`;
+  await fetch(url)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      result = data;
+    });
+  console.log(result);
+  if (!result.joke) {
+    console.log("error: " + result.message);
+    return false;
+  } else if (result.joke.length > 280) {
+    await getRandomJoke();
+    return;
+  } else {
+    return result.joke;
+  }
+};
+
+const tweetJoke = async () => {
+  let joke = await getRandomJoke();
+  if (joke) {
+    await tweet(joke);
+  }
+};
+
+let job2 = new CronJob("0 0 12 * * *", tweetJoke, null, true, "UTC+1");
+
+let job3 = new CronJob("0 0 18 * * *", tweetJoke, null, true, "UTC+1");
