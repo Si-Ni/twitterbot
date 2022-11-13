@@ -48,7 +48,7 @@ const tweet = async (string) => {
 tweet("test");
 
 let job = new CronJob(
-  "0 56 10 * * *",
+  "0 0 6 * * *",
   tweetInspirationalQuote,
   null,
   true,
