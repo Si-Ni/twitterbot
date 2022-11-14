@@ -38,8 +38,6 @@ const tweetInspirationalQuote = async () => {
   await tweet(quote);
 };
 
-tweetInspirationalQuote();
-
 const tweet = async (string) => {
   try {
     await rwClient.v2.tweet(string);
