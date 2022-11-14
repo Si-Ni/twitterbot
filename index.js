@@ -25,28 +25,20 @@ const getInspirationalQuotes = async () => {
   return result;
 };
 
-let inspirationalQuotes;
-let dayCounter = 0;
-
-const setInspirationalQuotes = async () => {
-  inspirationalQuotes = await getInspirationalQuotes();
-};
-
-setInspirationalQuotes();
-
 const tweetInspirationalQuote = async () => {
-  console.log("test3");
-  const todaysQuote = inspirationalQuotes[dayCounter];
+  let inspirationalQuotes = await getInspirationalQuotes();
+  const randomNumber = Math.floor(Math.random() * inspirationalQuotes.length);
+  const todaysQuote = inspirationalQuotes[randomNumber];
   const quote = `${todaysQuote.text} - ${todaysQuote.author}`;
-  console.log(dayCounter);
   console.log(quote);
-  dayCounter++;
   if (quote.length > 280) {
     await tweetInspirationalQuote();
     return;
   }
   await tweet(quote);
 };
+
+tweetInspirationalQuote();
 
 const tweet = async (string) => {
   try {
