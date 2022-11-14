@@ -1,6 +1,14 @@
 require("dotenv").config();
 const rwClient = require("./bot");
 const CronJob = require("cron").CronJob;
+const express = require("express");
+
+const app = express();
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`App is running on port ${PORT}`);
+});
 
 const getInspirationalQuotes = async () => {
   let jsonData;
@@ -48,7 +56,7 @@ const tweet = async (string) => {
 };
 
 let job = new CronJob(
-  "0 16 7 * * *",
+  "0 26 7 * * *",
   tweetInspirationalQuote,
   null,
   true,
