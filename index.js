@@ -26,6 +26,7 @@ const setInspirationalQuotes = async () => {
 setInspirationalQuotes();
 
 const tweetInspirationalQuote = async () => {
+  console.log("test3");
   const todaysQuote = inspirationalQuotes[dayCounter];
   const quote = `${todaysQuote.text} - ${todaysQuote.author}`;
   console.log(dayCounter);
@@ -47,7 +48,7 @@ const tweet = async (string) => {
 };
 
 let job = new CronJob(
-  "0 0 6 * * *",
+  "0 16 7 * * *",
   tweetInspirationalQuote,
   null,
   true,
