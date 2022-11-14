@@ -5,6 +5,7 @@ const express = require("express");
 
 const app = express();
 
+// wird benötigt, da Heroku auf die Verbindung mit einem Port wartet
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`App is running on port ${PORT}`);
@@ -56,7 +57,7 @@ const tweet = async (string) => {
 };
 
 let job = new CronJob(
-  "0 26 7 * * *",
+  "0 0 6 * * *",
   tweetInspirationalQuote,
   null,
   true,
