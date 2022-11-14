@@ -68,21 +68,21 @@ const getRandomJoke = async () => {
   if (!result.joke) {
     console.log("error: " + result.message);
     return false;
-  } else if (result.joke.length > 280) {
-    await getRandomJoke();
-    return;
-  } else {
-    return result.joke;
   }
+  return result.joke;
 };
 
 const tweetJoke = async () => {
   let joke = await getRandomJoke();
-  if (joke) {
-    await tweet(joke);
+  if (joke.length > 280) {
+    joke = await tweetJoke();
+    return;
   }
+  if (joke) await tweet(joke);
 };
 
 let job2 = new CronJob("0 0 12 * * *", tweetJoke, null, true, "UTC+1");
 
 let job3 = new CronJob("0 0 18 * * *", tweetJoke, null, true, "UTC+1");
+
+// http://kaffeine.herokuapp.com/
